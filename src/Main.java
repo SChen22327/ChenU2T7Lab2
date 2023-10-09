@@ -25,22 +25,20 @@ public class Main {
                 System.out.println("-10 points: exact same as previous; SCORE: " + score);
             }
             if (!newWord.equals(oldWord)) {
-                for (int i = newWord.length(); i > 0; i--) {
-                    System.out.println(oldWord.substring(oldWord.length() - i));
-                    System.out.println(newWord.substring(0, i));
+                for (int i = 1; i < newWord.length(); i++) {
                     if (oldWord.substring(oldWord.length() - i).equals(newWord.substring(0, i))) {
                         score += 2 * i + 1;
-                        System.out.println("+" + (2 * i + 1) + " points: " + oldWord + "'s last letters \"" + oldWord.substring(oldWord.length() - i) + "\" match " + newWord + "'s first letters \"" + newWord.substring(0, i) + "\": SCORE: " + score);
+                        System.out.println("+" + (2 * i + 1) + " points: " + oldWord + "'s last letters \"" + oldWord.substring(oldWord.length() - i) + "\" match " + newWord + "'s first letters \"" + newWord.substring(0, i) + "\"; SCORE: " + score);
                         break;
                     }
-
                 }
                 if (newWord.contains(oldWord.substring(0, 1))) {
                     score += 3;
-                    System.out.println("+3 points: " + oldWord + "'s first letter " + oldWord.substring(0, 1) + " is in " + newWord);
+                    System.out.println("+3 points: " + oldWord + "'s first letter " + oldWord.substring(0, 1) + " is in " + newWord + "; SCORE: " + score);
                 }
             }
             oldWord = newWord;
+            System.out.println();
         }
         System.out.println("You win! It took you " + wordCount + " words! Try again for a lower word count.");
     }
