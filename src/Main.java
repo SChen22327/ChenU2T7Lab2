@@ -4,34 +4,44 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int score = 0;
+        int wordCount = 1;
         System.out.print("Enter the starting word: ");
         String oldWord = scan.nextLine();
+        String newWord;
 
         while (score < 50) {
+            wordCount += 1;
             System.out.print("Enter the next word: ");
-            String newWord = scan.nextLine();
+            newWord = scan.nextLine();
 
             if (newWord.compareTo(oldWord) > 0) {
                 score += 2;
+                System.out.println("+2 points: current word alphabetically after; SCORE: " + score);
             } else if (newWord.compareTo(oldWord) < 0) {
                 score -= 5;
+                System.out.println("-5 points: current word alphabetically before; SCORE: " + score);
             } else {
-                System.out.println("They're the same word. - 10 points");
                 score -= 10;
+                System.out.println("-10 points: exact same as previous; SCORE: " + score);
             }
-            for (int i = newWord.length() + 1; i >= 1; i--) {
-                if (newWord.compareTo(oldWord) == 0) {
-                    break;
-                }
-                int index = oldWord.indexOf(newWord.substring(0,i));
-                if (newWord.length() - i != 0 && index > -1) {
-                    score = (2 * i) + 1;
-                } else {
-                    break;
-                }
-            }
-            System.out.print(score);
+            if (!newWord.equals(oldWord)) {
+                for (int i = newWord.length(); i > 0; i--) {
+                    System.out.println(oldWord.substring(oldWord.length() - i));
+                    System.out.println(newWord.substring(0, i));
+                    if (oldWord.substring(oldWord.length() - i).equals(newWord.substring(0, i))) {
+                        score += 2 * i + 1;
+                        System.out.println("+" + (2 * i + 1) + " points: " + oldWord + "'s last letters \"" + oldWord.substring(oldWord.length() - i) + "\" match " + newWord + "'s first letters \"" + newWord.substring(0, i) + "\": SCORE: " + score);
+                        break;
+                    }
 
+                }
+                if (newWord.contains(oldWord.substring(0, 1))) {
+                    score += 3;
+                    System.out.println("+3 points: " + oldWord + "'s first letter " + oldWord.substring(0, 1) + " is in " + newWord);
+                }
+            }
+            oldWord = newWord;
         }
+        System.out.println("You win! It took you " + wordCount + " words! Try again for a lower word count.");
     }
 }
